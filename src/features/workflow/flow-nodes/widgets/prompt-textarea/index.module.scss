@@ -1,0 +1,53 @@
+.mentions-container {
+  position: relative;
+}
+
+.textarea {
+  height: 120px;
+  overflow: auto;
+  border-radius: 6px;
+  background-color: white;
+  border: 1px solid #d9d9d9;
+  padding: 4px 11px;
+  font-size: 14px;
+  line-height: 22px;
+  outline: none;
+  cursor: text;
+
+  &:hover {
+    border-color: #44eb89;
+  }
+
+  &:active,
+  &:focus-visible,
+  &:focus,
+  &:focus-within {
+    border-color: #1dde74;
+    box-shadow: 0 0 0 2px rgba(30, 255, 92, 0.08);
+  }
+  & p {
+    line-height: 22px;
+    font-size: 14px;
+    & > span {
+      vertical-align: middle;
+    }
+  }
+}
+
+.textarea-disabled {
+  color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.04);
+  border-color: #d9d9d9;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 1;
+
+  &:hover,
+  &:active,
+  &:focus-visible,
+  &:focus,
+  &:focus-within {
+    border-color: #d9d9d9;
+    box-shadow: none;
+  }
+}
