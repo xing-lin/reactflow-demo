@@ -10,35 +10,37 @@ import {
   BeautifulMentionsPlugin,
 } from 'lexical-beautiful-mentions';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
-import { $createParagraphNode, $getRoot, type EditorState } from 'lexical';
-import {
-  convertToMentionNodes,
-  getMentionsTextContent,
-  MENTION_TRIGGER,
-} from './helper';
+import { $getRoot, type EditorState } from 'lexical';
+import { getMentionsTextContent, MENTION_TRIGGER } from './helper';
 import { MenuContainer, MenuItem } from './menu';
 import { MentionNode } from './mention';
 import { Empty } from './empty';
-import { memo, useMemo } from 'react';
-import { cn } from '@/utils';
+import { memo, useMemo, useRef } from 'react';
+import { SyncExternalValuePlugin } from './sync-external-value';
+import { MaxLengthPlugin } from './max-length-plugin';
 import { useAppSelector } from '@/app/hooks';
 import { selectMentionOptions } from '@/features/workflow/slice';
+import { cn } from '@/utils';
 
 export interface PromptTextareaProps {
-  initialValue: string;
+  value: string;
   onChange: (value: string) => void;
   id: string;
   disabled?: boolean;
   placeholder?: string;
+  maxLength?: number;
 }
 
 function PromptTextarea({
   id,
-  initialValue,
+  value,
   onChange,
   disabled,
   placeholder = 'Enter your prompt here...',
+  maxLength = 1000,
 }: PromptTextareaProps) {
+  const textareaValueRef = useRef<string>(null);
+
   const mentions = useAppSelector(selectMentionOptions);
 
   const mentionItems = useMemo(() => {
@@ -57,22 +59,21 @@ function PromptTextarea({
       const root = $getRoot();
       const value = getMentionsTextContent(root);
 
-      console.log('textarea value->', value);
+      textareaValueRef.current = value;
       onChange(value);
     });
   };
 
-  const setEditorState = (initialValue: string) => {
-    return () => {
-      const root = $getRoot();
-      root.clear();
-      const paragraph = $createParagraphNode();
+  // const setEditorState = (initialValue: string) => {
+  //   return () => {
+  //     const root = $getRoot();
+  //     root.clear();
+  //     const paragraph = $createParagraphNode();
 
-      console.log(convertToMentionNodes(initialValue));
-      paragraph.append(...convertToMentionNodes(initialValue));
-      root.append(paragraph);
-    };
-  };
+  //     paragraph.append(...convertToMentionNodes(initialValue));
+  //     root.append(paragraph);
+  //   };
+  // };
 
   return (
     <LexicalComposer
@@ -91,7 +92,7 @@ function PromptTextarea({
             },
           },
         ],
-        editorState: setEditorState(initialValue || ''),
+        // editorState: setEditorState(initialValue || ''),
         onError(error: Error) {
           console.log('Lexical error->', error);
           throw error;
@@ -120,6 +121,14 @@ function PromptTextarea({
         />
         <OnChangePlugin onChange={onChangeContenteditable} />
         <HistoryPlugin />
+        <MaxLengthPlugin maxLength={maxLength} />
+        <SyncExternalValuePlugin
+          value={value}
+          textareaValue={textareaValueRef.current}
+          onChangeTextareaValue={(value) => {
+            textareaValueRef.current = value;
+          }}
+        />
       </div>
     </LexicalComposer>
   );

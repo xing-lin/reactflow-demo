@@ -5,7 +5,6 @@ import {
   InAbnormalActionSelect,
   NodePanelContainerMemo,
   PromptTextareaMemo,
-  useChangeInitialValue,
 } from '../../widgets';
 import type { FlowNodeClickElement } from './types';
 import { FLOW_NODE_TYPE_KEY } from '../types';
@@ -16,10 +15,6 @@ export function FlowNodeClickElement({
 }: NodeProps<FlowNodeClickElement>) {
   const { goal, inAbnormalAction } = data;
   const { updateNodeData } = useReactFlow();
-
-  const { key, initialValue, onChangeInitialValue } = useChangeInitialValue({
-    initialValue: goal,
-  });
 
   const onChangeValue = (value: string) => updateNodeData(id, { goal: value });
   const onChangeSelect: SelectProps['onChange'] = (value) => {
@@ -35,19 +30,11 @@ export function FlowNodeClickElement({
           <FormLabel>
             Describe the mouse click action and click object/@parameter
           </FormLabel>
-          <PromptTextareaMemo
-            key={key}
-            id={id}
-            initialValue={initialValue}
-            onChange={onChangeValue}
-          />
+          <PromptTextareaMemo id={id} value={goal} onChange={onChangeValue} />
           <ButtonSamplePrompt
             nodeId={id}
             nodeType={FLOW_NODE_TYPE_KEY.CLICK_ELEMENT}
-            onChangePrompt={(value) => {
-              onChangeValue(value);
-              onChangeInitialValue(value);
-            }}
+            onChangePrompt={onChangeValue}
           />
 
           <InAbnormalActionSelect

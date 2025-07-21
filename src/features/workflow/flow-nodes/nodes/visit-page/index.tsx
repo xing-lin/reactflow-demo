@@ -5,7 +5,6 @@ import {
   InAbnormalActionSelect,
   NodePanelContainerMemo,
   PromptTextareaMemo,
-  useChangeInitialValue,
 } from '../../widgets';
 import type { FlowNodeVisitPage } from './types';
 import { FLOW_NODE_TYPE_KEY } from '../types';
@@ -13,10 +12,6 @@ import { FLOW_NODE_TYPE_KEY } from '../types';
 export function FlowNodeVisitPage({ id, data }: NodeProps<FlowNodeVisitPage>) {
   const { goal, inAbnormalAction } = data;
   const { updateNodeData } = useReactFlow();
-
-  const { key, initialValue, onChangeInitialValue } = useChangeInitialValue({
-    initialValue: goal,
-  });
 
   const onChangeInputTextarea = (value: string) => {
     updateNodeData(id, {
@@ -39,19 +34,15 @@ export function FlowNodeVisitPage({ id, data }: NodeProps<FlowNodeVisitPage>) {
             data
           </FormLabel>
           <PromptTextareaMemo
-            key={key}
             id={id}
-            initialValue={initialValue}
+            value={goal}
             onChange={onChangeInputTextarea}
           />
 
           <ButtonSamplePrompt
             nodeId={id}
             nodeType={FLOW_NODE_TYPE_KEY.VISIT_PAGE}
-            onChangePrompt={(prompt) => {
-              onChangeInputTextarea(prompt);
-              onChangeInitialValue(prompt);
-            }}
+            onChangePrompt={onChangeInputTextarea}
           />
 
           <InAbnormalActionSelect

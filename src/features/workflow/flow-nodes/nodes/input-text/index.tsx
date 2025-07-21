@@ -8,14 +8,9 @@ import {
 } from '../../widgets';
 import type { FlowNodeInputText } from './types';
 import { FLOW_NODE_TYPE_KEY } from '../types';
-import { useChangeInitialValue } from '../../widgets';
 
 export function FlowNodeInputText({ id, data }: NodeProps<FlowNodeInputText>) {
   const { goal, inAbnormalAction } = data;
-
-  const { key, initialValue, onChangeInitialValue } = useChangeInitialValue({
-    initialValue: goal,
-  });
 
   const { updateNodeData } = useReactFlow();
 
@@ -39,18 +34,14 @@ export function FlowNodeInputText({ id, data }: NodeProps<FlowNodeInputText>) {
             Describes the page scrolling direction and scrolling position
           </FormLabel>
           <PromptTextareaMemo
-            key={key}
             id={id}
-            initialValue={initialValue}
+            value={goal}
             onChange={onChangeInputTextarea}
           />
           <ButtonSamplePrompt
             nodeId={id}
             nodeType={FLOW_NODE_TYPE_KEY.INPUT_TEXT}
-            onChangePrompt={(value) => {
-              onChangeInputTextarea(value);
-              onChangeInitialValue(value);
-            }}
+            onChangePrompt={onChangeInputTextarea}
           />
 
           <InAbnormalActionSelect

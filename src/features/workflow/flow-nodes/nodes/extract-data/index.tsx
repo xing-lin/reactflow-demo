@@ -5,7 +5,6 @@ import {
   InAbnormalActionSelect,
   NodePanelContainerMemo,
   PromptTextareaMemo,
-  useChangeInitialValue,
 } from '../../widgets';
 import type { FlowNodeExtractData } from './types';
 import { FLOW_NODE_TYPE_KEY } from '../types';
@@ -16,22 +15,6 @@ export function FlowNodeExtractData({
 }: NodeProps<FlowNodeExtractData>) {
   const { goal, filter, inAbnormalAction } = data;
   const { updateNodeData } = useReactFlow();
-
-  const {
-    key: keyGoal,
-    initialValue: initialValueGoal,
-    onChangeInitialValue: onChangeInitialValueGoal,
-  } = useChangeInitialValue({
-    initialValue: goal,
-  });
-
-  const {
-    key: keyFilter,
-    initialValue: initialValueFilter,
-    onChangeInitialValue: onChangeInitialValueFilter,
-  } = useChangeInitialValue({
-    initialValue: filter,
-  });
 
   const onChangeInputTextarea = (value: string, type: 'goal' | 'filter') => {
     updateNodeData(id, {
@@ -54,18 +37,14 @@ export function FlowNodeExtractData({
             storage field names
           </FormLabel>
           <PromptTextareaMemo
-            key={keyGoal}
             id={`${id}-goal`}
-            initialValue={initialValueGoal}
+            value={goal}
             onChange={(value) => onChangeInputTextarea(value, 'goal')}
           />
           <ButtonSamplePrompt
             nodeId={id}
             nodeType={FLOW_NODE_TYPE_KEY.EXTRACT_DATA}
-            onChangePrompt={(prompt) => {
-              onChangeInputTextarea(prompt, 'goal');
-              onChangeInitialValueGoal(prompt);
-            }}
+            onChangePrompt={(value) => onChangeInputTextarea(value, 'goal')}
           />
 
           <FormLabel className="mt-6">
@@ -73,18 +52,14 @@ export function FlowNodeExtractData({
             displayed screen
           </FormLabel>
           <PromptTextareaMemo
-            key={keyFilter}
             id={`${id}-filter`}
-            initialValue={initialValueFilter}
+            value={filter}
             onChange={(value) => onChangeInputTextarea(value, 'filter')}
           />
           <ButtonSamplePrompt
             nodeId={id}
             nodeType={FLOW_NODE_TYPE_KEY.EXTRACT_DATA}
-            onChangePrompt={(prompt) => {
-              onChangeInputTextarea(prompt, 'filter');
-              onChangeInitialValueFilter(prompt);
-            }}
+            onChangePrompt={(value) => onChangeInputTextarea(value, 'filter')}
           />
 
           <InAbnormalActionSelect

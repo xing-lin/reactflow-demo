@@ -2,22 +2,13 @@ import { ButtonSamplePrompt, FormLabel, HandlesWrapper } from '../../ui';
 import { type NodeProps, useReactFlow } from '@xyflow/react';
 import type { FlowNodeStart } from './types';
 import { FLOW_NODE_TYPE_KEY } from '../types';
-import {
-  NodePanelContainerMemo,
-  PromptTextareaMemo,
-  useChangeInitialValue,
-} from '../../widgets';
+import { NodePanelContainerMemo, PromptTextareaMemo } from '../../widgets';
 
-export function FlowNodeStart({ id }: NodeProps<FlowNodeStart>) {
+export function FlowNodeStart({ id, data }: NodeProps<FlowNodeStart>) {
   const { updateNodeData } = useReactFlow();
 
   // data['goal']
-
-  const value = 'textarea value-> {{123@qq.com}}';
-
-  const { key, initialValue, onChangeInitialValue } = useChangeInitialValue({
-    initialValue: value,
-  });
+  const { goal } = data;
 
   const onChangeValue = (value: string) => {
     updateNodeData(id, {
@@ -34,9 +25,8 @@ export function FlowNodeStart({ id }: NodeProps<FlowNodeStart>) {
               Describe the ultimate goal that needs to be achieved
             </FormLabel>
             <PromptTextareaMemo
-              key={key}
               id={`${id}-edit`}
-              initialValue={initialValue}
+              value={goal}
               onChange={onChangeValue}
             />
             <div className="text-45 mt-1 text-xs/4.5">
@@ -45,10 +35,7 @@ export function FlowNodeStart({ id }: NodeProps<FlowNodeStart>) {
             <ButtonSamplePrompt
               nodeId={id}
               nodeType={FLOW_NODE_TYPE_KEY.START}
-              onChangePrompt={(value) => {
-                onChangeValue(value);
-                onChangeInitialValue(value);
-              }}
+              onChangePrompt={onChangeValue}
             />
           </>
         </div>

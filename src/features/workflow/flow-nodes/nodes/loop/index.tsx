@@ -6,21 +6,13 @@ import {
   HandlesWrapper,
 } from '../../ui';
 import type { FlowNodeLoop } from './types';
-import {
-  NodePanelContainerMemo,
-  PromptTextareaMemo,
-  useChangeInitialValue,
-} from '../../widgets';
+import { NodePanelContainerMemo, PromptTextareaMemo } from '../../widgets';
 import { FLOW_NODE_TYPE_KEY } from '../types';
 
 export function FlowNodeLoop({ id, data }: NodeProps<FlowNodeLoop>) {
   const { updateNodeData } = useReactFlow();
 
   const { goal, limit } = data;
-
-  const { key, initialValue, onChangeInitialValue } = useChangeInitialValue({
-    initialValue: goal,
-  });
 
   const onChange = (key: string, value: string | number) => {
     updateNodeData(id, {
@@ -36,18 +28,14 @@ export function FlowNodeLoop({ id, data }: NodeProps<FlowNodeLoop>) {
             Describe the ultimate goal that needs to be achieved
           </FormLabel>
           <PromptTextareaMemo
-            key={key}
             id={id}
-            initialValue={initialValue}
+            value={goal}
             onChange={(value) => onChange('goal', value)}
           />
           <ButtonSamplePrompt
             nodeId={id}
             nodeType={FLOW_NODE_TYPE_KEY.LOOP}
-            onChangePrompt={(prompt) => {
-              onChange('goal', prompt);
-              onChangeInitialValue(prompt);
-            }}
+            onChangePrompt={(value) => onChange('goal', value)}
           />
         </div>
         <div className="mt-6 flex items-center gap-2">
