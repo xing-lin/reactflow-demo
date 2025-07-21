@@ -22,6 +22,7 @@ export function FlowPaletteNode() {
   ];
 
   const { setNodes, getNodes, getEdges, setEdges } = useReactFlow();
+  // const { zoom: flowZoom } = useViewport();
 
   const { open, initialValues } = useAppSelector(selectPaletteDrawerData);
   const dispatch = useAppDispatch();
@@ -46,6 +47,20 @@ export function FlowPaletteNode() {
   const onCloseWorkflowPanel = () => {
     dispatch(setPaletteDrawerData({ open: false, initialValues: null }));
   };
+
+  // const handleCenter = () => {
+  //   const node = getNode('1');
+
+  //   if (!node) {
+  //     return;
+  //   }
+  //   const nodeCenterX = node.position.x + (node?.measured?.width || 0) / 2;
+  //   const nodeCenterY = node.position.y + (node?.measured?.height || 0) / 2;
+
+  //   console.log('x, y->', nodeCenterX, nodeCenterY);
+
+  //   setCenter(nodeCenterX, nodeCenterY, { zoom: flowZoom });
+  // };
 
   return (
     <div
@@ -85,6 +100,7 @@ export function FlowPaletteNode() {
           })}
         </ul>
       </section>
+      {/* <button onClick={handleCenter}>平移</button> */}
     </div>
   );
 }
