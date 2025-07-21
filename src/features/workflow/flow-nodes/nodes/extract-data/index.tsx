@@ -44,7 +44,7 @@ export function FlowNodeExtractData({
           <ButtonSamplePrompt
             nodeId={id}
             nodeType={FLOW_NODE_TYPE_KEY.EXTRACT_DATA}
-            onChangePrompt={(value) => onChangeInputTextarea(value, 'goal')}
+            valueKey="goal"
           />
 
           <FormLabel className="mt-6">
@@ -59,7 +59,7 @@ export function FlowNodeExtractData({
           <ButtonSamplePrompt
             nodeId={id}
             nodeType={FLOW_NODE_TYPE_KEY.EXTRACT_DATA}
-            onChangePrompt={(value) => onChangeInputTextarea(value, 'filter')}
+            valueKey="filter"
           />
 
           <InAbnormalActionSelect

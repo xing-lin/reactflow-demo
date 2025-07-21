@@ -34,7 +34,7 @@ export function FlowNodeClickElement({
           <ButtonSamplePrompt
             nodeId={id}
             nodeType={FLOW_NODE_TYPE_KEY.CLICK_ELEMENT}
-            onChangePrompt={onChangeValue}
+            valueKey="goal"
           />
 
           <InAbnormalActionSelect

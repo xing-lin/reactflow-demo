@@ -42,7 +42,7 @@ export function FlowNodeVisitPage({ id, data }: NodeProps<FlowNodeVisitPage>) {
           <ButtonSamplePrompt
             nodeId={id}
             nodeType={FLOW_NODE_TYPE_KEY.VISIT_PAGE}
-            onChangePrompt={onChangeInputTextarea}
+            valueKey="goal"
           />
 
           <InAbnormalActionSelect

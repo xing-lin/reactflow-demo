@@ -43,7 +43,7 @@ export function FlowNodeScrollPage({
           <ButtonSamplePrompt
             nodeId={id}
             nodeType={FLOW_NODE_TYPE_KEY.SCROLL_PAGE}
-            onChangePrompt={onChangeInputTextarea}
+            valueKey="goal"
           />
 
           <InAbnormalActionSelect

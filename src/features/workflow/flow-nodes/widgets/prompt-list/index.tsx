@@ -7,14 +7,19 @@ import {
 } from '@/features/workflow/slice';
 import { cn } from '@/utils';
 import { mockData } from './mock';
+import { useReactFlow } from '@xyflow/react';
 
 export function PromptListPanel() {
+  const { updateNodeData } = useReactFlow();
   const dispatch = useAppDispatch();
   const { open, initialValues } = useAppSelector(selectPromptDrawerData);
 
   const onClick = (prompt: string) => {
-    if (initialValues?.onChangePrompt) {
-      initialValues.onChangePrompt(prompt);
+    if (initialValues) {
+      const { nodeId, valueKey } = initialValues;
+      updateNodeData(nodeId, {
+        [valueKey]: prompt,
+      });
     }
   };
 

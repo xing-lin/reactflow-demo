@@ -23,7 +23,7 @@ interface PromptDrawerData {
   initialValues: null | {
     nodeId: string;
     nodeType: FLOW_NODE_TYPE_KEY;
-    onChangePrompt: (value: string) => void;
+    valueKey: string;
   };
 }
 

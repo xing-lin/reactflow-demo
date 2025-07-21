@@ -35,7 +35,7 @@ export function FlowNodeLoop({ id, data }: NodeProps<FlowNodeLoop>) {
           <ButtonSamplePrompt
             nodeId={id}
             nodeType={FLOW_NODE_TYPE_KEY.LOOP}
-            onChangePrompt={(value) => onChange('goal', value)}
+            valueKey="goal"
           />
         </div>
         <div className="mt-6 flex items-center gap-2">

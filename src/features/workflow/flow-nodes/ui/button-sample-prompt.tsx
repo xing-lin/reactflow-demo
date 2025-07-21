@@ -7,7 +7,7 @@ import type { InitialState } from '../../slice.types';
 export function ButtonSamplePrompt({
   nodeId,
   nodeType,
-  onChangePrompt,
+  valueKey,
   className,
   ...restProps
 }: HTMLAttributes<HTMLButtonElement> &
@@ -29,7 +29,7 @@ export function ButtonSamplePrompt({
             initialValues: {
               nodeId,
               nodeType,
-              onChangePrompt,
+              valueKey,
             },
           })
         );

@@ -35,7 +35,7 @@ export function FlowNodeStart({ id, data }: NodeProps<FlowNodeStart>) {
             <ButtonSamplePrompt
               nodeId={id}
               nodeType={FLOW_NODE_TYPE_KEY.START}
-              onChangePrompt={onChangeValue}
+              valueKey="goal"
             />
           </>
         </div>

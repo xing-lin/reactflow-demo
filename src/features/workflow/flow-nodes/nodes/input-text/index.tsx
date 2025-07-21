@@ -41,7 +41,7 @@ export function FlowNodeInputText({ id, data }: NodeProps<FlowNodeInputText>) {
           <ButtonSamplePrompt
             nodeId={id}
             nodeType={FLOW_NODE_TYPE_KEY.INPUT_TEXT}
-            onChangePrompt={onChangeInputTextarea}
+            valueKey="goal"
           />
 
           <InAbnormalActionSelect

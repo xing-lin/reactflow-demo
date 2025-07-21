@@ -263,7 +263,6 @@ export function createNode({
       return {
         ...common,
         ...identifiers,
-        // @ts-expect-error ignore
         type: nodeType,
         data: {
           ...defaultAction,
